@@ -1,0 +1,10 @@
+test_projects/*/lib
+test_projects/*/classes/
+test_projects/*/nomnomnom*.jar
+test_projects/sample/pom.xml
+classes/
+lib/
+leiningen*.jar
+lein-swank/lein-swank*.jar
+autodoc/
+bin/nom
