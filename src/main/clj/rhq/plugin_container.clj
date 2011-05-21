@@ -16,13 +16,20 @@
      (PluginContainerConfiguration/getDefaultClassLoaderFilter))
     (.setCreateResourceClassloaders true)))
 
-(defn- pc [] (PluginContainer/getInstance))
+(defn pc
+  "Returns the PluginContainer singleton object."
+  []
+  (PluginContainer/getInstance))
 
 (defn inventory-mgr [] (.. (pc) getInventoryManager))
 
 (defn plugin-mgr [] (.. (pc) getPluginManager))
 
-(defn start []
+(defn start
+  "Initializes the plugin container. Once initialized, plugins will be activated
+   and discovery scans will begin. This function is effectively a no-op if the
+   plugin container is already running."
+  []
   (let [basedir (io/file "target")]
     (println (.getAbsolutePath basedir))
     (.setConfiguration
@@ -30,9 +37,17 @@
      (create-pc-config (io/file basedir "plugins") (io/file basedir "data")))
     (.initialize (PluginContainer/getInstance))))
 
-(defn stop [] (.shutdown (pc)))
+(defn stop
+  "Shuts down the plugin container. This function is a no-op if the plugin
+   container has already been stopped."
+  []
+  (.shutdown (pc)))
 
-(defn running? [] (.isStarted (pc)))
+(defn running?
+  "Returns true if the plugin container has been started and is fully
+   initialized."
+  []
+  (.isStarted (pc)))
 
 (defn- plugin [r] (.. r getResourceType getPlugin))
 
@@ -95,4 +110,4 @@
       (.invokeOperation
        (.getOperationServices context) context op-name args timeout))))
 
-; (defn test [preds] (fn [val] (every? (fn [f] (f val)) preds)))
+; (defn test [preds] (fn [val] (every? (fn [f] (f val)) preds)))(ns rhq.plugin-cdontainer)
