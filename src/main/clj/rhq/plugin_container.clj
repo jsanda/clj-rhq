@@ -128,16 +128,33 @@
     :type
 
   :plugin
-  Expects the plugin name as a string
+  Expects the plugin name as a string.
 
   :category
-  Epxects one of three values - :PLATFORM, :SERVER, or :SERVICE
+  Epxects one of three values - :PLATFORM, :SERVER, or :SERVICE.
 
   :availability
   Expects either :UP or :DOWN
 
   :type
-  Expected either a ResourceType object, or the resource type name as a string"
+  Expects either a ResourceType object, or the resource type name as a string.
+
+  :fn
+  Expectes a predicate function that takes a Resource object as an argument and
+  returns true if the resource should be included in the results.
+
+  Multiple filters can be specified. All filters must return true in order for a
+  resource to be included in the results. Here are some examples to illustrate
+  how to use the filters:
+
+  (inventory {:availability :DOWN})  ;; returns all down resources
+
+  (inventory {:availability :DOWN     ;; returns all down resources
+              :plugin \"JBossAS5\"})  ;; from the JBossAS5 plugin
+
+  (inventory {:fn #(not               ;; returns all resources that have defined
+                    (nil?             ;; a resource configuration
+                      (.. % getResourceType getResourceConfigurationDefinition)))}"
   ([] (.getPlatform (inventory-mgr)))
   ([opts]
      (filter (inventory-filter opts)
