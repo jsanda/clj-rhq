@@ -84,8 +84,8 @@
 
   When invoked with a single argument, one of two values is epxected,
 
-    1) :server
-    2) :service
+    1) :SERVER
+    2) :SERVICE
 
   where :server causes a server scan to be run and :service causes a service
   scan to be run. Returns the inventory report. If the argument is some other
@@ -93,8 +93,8 @@
   ([] [(.executeServerScanImmediately (inventory-mgr))
        (.executeServiceScanImmediately (inventory-mgr))])
   ([category]
-     (cond (= :server category) (.executeServerScanImmediately (inventory-mgr))
-	   (= :service category) (.executeServiceScanImmediately
+     (cond (= :SERVER category) (.executeServerScanImmediately (inventory-mgr))
+	   (= :SERVICE category) (.executeServiceScanImmediately
 				  (inventory-mgr))
 	   :else (discover))))
 
