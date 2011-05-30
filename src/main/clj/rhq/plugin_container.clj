@@ -87,7 +87,7 @@
     1) :SERVER
     2) :SERVICE
 
-  where :server causes a server scan to be run and :service causes a service
+  where :SERVER causes a server scan to be run and :SERVICE causes a service
   scan to be run. Returns the inventory report. If the argument is some other
   value, then it results this fn being invoked without any arguments."
   ([] [(.executeServerScanImmediately (inventory-mgr))
